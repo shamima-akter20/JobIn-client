@@ -13,10 +13,10 @@ import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 
 
 
-const Jaku = () => {
+const Sladu = () => {
    
     return (
-        <>
+        <div className=''>
           <Swiper 
             spaceBetween={30}
             centeredSlides={true}
@@ -29,7 +29,7 @@ const Jaku = () => {
             }}
             navigation={true}
             modules={[Autoplay, Pagination, Navigation]}
-            className="mySwiper h-[600px] cover" >
+            className="mySwiper " >
          
             <SwiperSlide> <img src="https://i.ibb.co/vh13rjS/f10.jpg" className="w-full" /></SwiperSlide>
             <SwiperSlide> <img src="https://i.ibb.co/hMj6wH5/f9.jpg " className="w-full" /></SwiperSlide>
@@ -41,8 +41,8 @@ const Jaku = () => {
             <SwiperSlide><img src="https://i.ibb.co/zH0h0pF/f3.jpg" className="w-full" /></SwiperSlide>
             <SwiperSlide><img src="https://i.ibb.co/4KcHdsB/f2.jpg " className="w-full" /></SwiperSlide>
           </Swiper>
-        </>
+        </div>
       );
 };
 
-export default Jaku;
+export default Sladu;

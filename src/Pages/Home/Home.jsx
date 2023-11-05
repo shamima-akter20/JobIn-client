@@ -1,12 +1,10 @@
-import Banner from "./Banner";
-import Jaku from "./Jaku";
+import Sladu from "./Sladu";
 
 
 const Home = () => {
     return (
         <div>
-            <Banner></Banner>
-            <Jaku></Jaku>
+            <Sladu></Sladu>
         </div>
     );
 };
