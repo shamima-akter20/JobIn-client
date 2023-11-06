@@ -1,10 +1,11 @@
-import Sladu from "./Sladu";
+import Banner from "./Banner";
+
 
 
 const Home = () => {
     return (
-        <div>
-            <Sladu></Sladu>
+        <div className="px-10">
+            <Banner></Banner>
         </div>
     );
 };

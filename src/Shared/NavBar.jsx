@@ -1,11 +1,22 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Offcanvas from "react-bootstrap/Offcanvas";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../Pages/Authentication/AuthProvider";
 
 function OffcanvasExample() {
+  const {user, logOut } = useContext(AuthContext);
+  
+  const handleSignOut = () =>{
+    logOut()
+       .then()
+       .catch()
+  }
+
+    // theme set dark 
     const [theme, setTheme] = useState(localStorage.getItem("theme") ? localStorage.getItem("theme") : "light" );
 
   const handleToggle = (e) =>{
@@ -22,10 +33,11 @@ function OffcanvasExample() {
       },[theme]);
 
   return (
-    <div className="px-6 md:px-10" >
+    <div>
       {[false].map((expand) => (
-        <Navbar key={expand} expand={expand} className="bg-body-tertiary mb-3">
+        <Navbar key={expand} expand={expand} className="bg-body-tertiary mb-3 px-6 md:px-10 ">
           <Container fluid>
+          {/* className="px-6 md:px-10" */}
             {/* === LOGO === */}
             <Navbar.Brand>
               <div className="flex" >
@@ -46,7 +58,15 @@ function OffcanvasExample() {
             
             {/* User login SignIn */}
             <div className="flex justify-center items-center">
-               <button className="btn btn-sm btn-outline btn-info">Log In </button>
+             {
+              user ?
+             <button className="btn btn-sm btn-outline btn-info">Sign Out</button>
+             :
+             <Link to="/login">
+             <button  onClick={handleSignOut}
+             className="btn btn-sm btn-outline btn-info">Log In </button>
+             </Link>
+             } 
             </div>
 
 
@@ -83,7 +103,7 @@ function OffcanvasExample() {
               <Offcanvas.Body>
                 <Nav className="justify-content-end text-cyan-500
                 flex-grow-1 pe-3 font-semibold">
-                  <Nav.Link to="/" >Home</Nav.Link>
+                  <Link to="/" >Home</Link>
                   <Nav.Link to="/" >Add job</Nav.Link>
                   <Nav.Link to="/" >My posted jobs</Nav.Link>
                   <Nav.Link to="/" >My Bids</Nav.Link>

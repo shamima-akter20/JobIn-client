@@ -31,8 +31,8 @@ const Sladu = () => {
             modules={[Autoplay, Pagination, Navigation]}
             className="mySwiper " >
          
-            <SwiperSlide> <img src="https://i.ibb.co/vh13rjS/f10.jpg" className="w-full" /></SwiperSlide>
-            <SwiperSlide> <img src="https://i.ibb.co/hMj6wH5/f9.jpg " className="w-full" /></SwiperSlide>
+            <SwiperSlide><img src="https://i.ibb.co/vh13rjS/f10.jpg" className="w-full" /></SwiperSlide>
+            <SwiperSlide><img src="https://i.ibb.co/hMj6wH5/f9.jpg " className="w-full" /></SwiperSlide>
             <SwiperSlide><img src="https://i.ibb.co/ZzbncqK/f8.jpg " className="w-full" /></SwiperSlide>
             <SwiperSlide><img src="https://i.ibb.co/Wpry37T/f7.jpg" className="w-full" /></SwiperSlide>
             <SwiperSlide><img src="https://i.ibb.co/NY2rDXR/f6.jpg" className="w-full" /></SwiperSlide>
