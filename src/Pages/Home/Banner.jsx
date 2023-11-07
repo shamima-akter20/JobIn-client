@@ -6,7 +6,7 @@ import { Carousel, } from 'flowbite-react';
 
 const Banner = () => {
   return (
-    <div className="h-56 sm:h-[300px]  md:h-[600px]">
+    <div className="h-56 sm:h-[300px]  md:h-[600px] ">
     <Carousel onSlideChange={(index) => console.log('onSlideChange()', index)}>
 
       <div className="bg-cover flex h-[700px]  items-center justify-center bg-gray-400 dark:bg-gray-700 dark:text-white"

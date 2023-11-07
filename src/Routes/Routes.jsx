@@ -1,6 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../Main/Main";
+import AddJobs from "../Pages/AddJobs/AddJobs";
 import LogIn from "./../Pages/Authentication/LogIn";
+import PrivateRoute from "./../Pages/Authentication/PrivateRoute";
 import Register from "./../Pages/Authentication/Register";
 import Error from "./../Pages/Error/Error";
 import Home from "./../Pages/Home/Home";
@@ -23,7 +25,10 @@ const router = createBrowserRouter([
           path:'/register',
           element:<Register></Register> ,
         },
-
+        {
+          path:'/addjobs',
+          element:<PrivateRoute><AddJobs></AddJobs></PrivateRoute> ,
+        },
       ]
     },
   ]);

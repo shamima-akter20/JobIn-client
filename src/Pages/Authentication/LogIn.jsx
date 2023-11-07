@@ -1,21 +1,66 @@
 import Lottie from "lottie-react";
+import Swal from 'sweetalert2';
 import Login from "./Login.json";
 ("use client");
 
 import { Card, Label, TextInput } from "flowbite-react";
-import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "./AuthProvider";
 
 const LogIn = () => {
+  const {signIn, googleSignIn} = useContext(AuthContext);
+  const [loginError, setLoginError] = useState('');
+  const location = useLocation();
+  const navigate = useNavigate();
+  console.log("location in the page", location);
+
+  
+      //google sign in
+      const handleGooglelogIn = () => {
+        googleSignIn()
+        .then(result =>{
+          console.log(result.user)
+          //nevigate after login
+      navigate(location?.state ? location.state : '/' );
+          Swal.fire(
+            'Logged In!',
+            'You logged in successfully with Google!',
+            'success'
+          )
+        })
+        
+      }
 
   const handleLogIn = e =>{
     e.preventDefault('');
     console.log(e.currentTarget);
     const form = new FormData(e.currentTarget);
-   
     const email = form.get('email');
     const password = form.get('password');
-
     console.log( email, password);
+    // set login error
+    setLoginError('');
+
+    //log in user
+    signIn(email, password)
+    .then( result =>{
+      console.log(result.user);
+      console.log(result.user)
+      Swal.fire({
+        title: "Logged In!",
+        text: "Logged In Successfully!",
+        icon: "success"
+      });
+
+      //nevigate after login
+      navigate(location?.state ? location.state : '/' );
+
+    })
+    .catch(error =>{
+      console.error(error);
+      setLoginError(error.message)
+    })
   }
     
   return (
@@ -52,15 +97,22 @@ const LogIn = () => {
 
                  
              <h1 className="" >No Account?<Link to="/register"
-             className="font-bold text-cyan-500 " >Register </Link> </h1>
+             className="font-bold text-cyan-500 " > Register </Link> </h1>
 
              
               <button className="btn btn-outline btn-info font-bold">LOGIN</button>
            
             </form>
+
+            <div className="text-center ">
+              {
+                loginError && <p className="text-base text-red-600 font-bold">
+                  Incorrect Email or Password </p>
+              }
+             </div>
  
             <div className="flex mb-6 justify-center">  
-              <button 
+              <button onClick={handleGooglelogIn}
                className="btn  font-bold ">
               <img className="h-8" src="https://i.ibb.co/tJMpW3j/icons8-google-48.png" alt="" />
                Login With Google

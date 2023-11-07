@@ -1,15 +1,36 @@
 import Lottie from "lottie-react";
+import Swal from 'sweetalert2';
 import Login from "./Login.json";
 ("use client");
 
 import { Card, Label, TextInput } from "flowbite-react";
-import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "./AuthProvider";
 
 
 const Register = () => {
-    const {createUser} = useContext(AuthContext)
+    const { createUser, googleSignIn} = useContext(AuthContext);
+    const [registerError, setRegisterError] = useState('');
+    const location = useLocation();
+    const navigate = useNavigate();
+
+     //google sign in
+     const handleGoogle = () => {
+      googleSignIn()
+      .then(result =>{
+        console.log(result.user);
+         //navigate after login
+      navigate(location?.state ? location.state : '/' );
+      Swal.fire(
+      'Registered!',
+      'You registered successfully with Google!',
+      'success'
+    )
+      })
+      
+    }
+      
 
     const handleRegister = e =>{
         e.preventDefault('');
@@ -20,17 +41,41 @@ const Register = () => {
         const email = form.get('email');
         const password = form.get('password');
         console.log(name, image, email, password);
+        //reset error
+        setRegisterError('');
+
+        if(password.length < 6){
+          setRegisterError('Password must have at least 6 characters');
+          return;
+        }
+        else if(!/[A-Z]/.test(password) ) {
+          setRegisterError('Password must have at least 1 uppercase');
+          return;
+        }
+        else if(!/[#?!@$%^&*()_-]/.test(password)){
+          setRegisterError('Password must have at least 1 special character');
+          return;
+        }
 
         // create user
         createUser( email, password)
         .then(result => {
             console.log(result.user)
+            Swal.fire({
+              title: "Registered!",
+              text: "Registered Successfully!",
+              icon: "success"
+            });
+
+            //navigate after registersd
+          //navigate(location?.state ? location.state : '/' );
+
         })
         .catch(error =>{
-            console.error(error)
+            console.error(error);
+            setRegisterError("Already registered email or password");
         })
       }
-        
 
     return (
         <div>
@@ -95,9 +140,18 @@ const Register = () => {
                <button className="btn btn-outline btn-info font-bold">REGISTER</button>
             
              </form>
+
+             <div className="text-center ">
+              {
+                registerError && <p className="text-base text-red-600 font-bold">
+                  {/* Already Used Email or Password  */}
+                  {registerError}
+                  </p>
+              }
+             </div>
   
              <div className="flex mb-6 justify-center">  
-               <button 
+               <button onClick={handleGoogle}
                 className="btn  font-bold ">
                <img className="h-8" src="https://i.ibb.co/tJMpW3j/icons8-google-48.png" alt="" />
                 Register With Google

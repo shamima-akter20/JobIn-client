@@ -1,11 +1,8 @@
-import "bootstrap/dist/css/bootstrap.min.css";
 import { useContext, useEffect, useState } from "react";
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import Offcanvas from "react-bootstrap/Offcanvas";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../Pages/Authentication/AuthProvider";
+'use client';
+
 
 function OffcanvasExample() {
   const {user, logOut } = useContext(AuthContext);
@@ -19,7 +16,7 @@ function OffcanvasExample() {
     // theme set dark 
     const [theme, setTheme] = useState(localStorage.getItem("theme") ? localStorage.getItem("theme") : "light" );
 
-  const handleToggle = (e) =>{
+    const handleToggle = (e) =>{
        if(e.target.checked ){
         setTheme("dark");
        }  else{
@@ -32,46 +29,55 @@ function OffcanvasExample() {
         document.querySelector("html").setAttribute("data-theme", localTheme );
       },[theme]);
 
+  const navLink = <>
+    <div className="flex lg:flex-row flex-col lg:py-0 ">
+    <Link to="/" className="lg:py-0 text-center lg:px-3 hover:text-slate-400 rounded-3xl  py-1 font-bold text-cyan-600" >Home</Link>
+    <Link to="/addjobs" className="lg:py-0 text-center lg:px-3 hover:text-slate-400 rounded-3xl  py-1 font-bold text-cyan-600" >Add job</Link>
+    <Link to="/" className="lg:py-0 text-center lg:px-3 hover:text-slate-400 rounded-3xl  py-1 font-bold text-cyan-600" >My posted jobs</Link>
+    <Link to="/" className="lg:py-0 text-center lg:px-3 hover:text-slate-400 rounded-3xl  py-1 font-bold text-cyan-600" >My Bids</Link>
+    <Link to="/" className="lg:py-0 text-center lg:px-3 hover:text-slate-400 rounded-3xl  py-1 font-bold text-cyan-600" >Bid Requests</Link>
+    </div>
+   </>
+
   return (
-    <div>
-      {[false].map((expand) => (
-        <Navbar key={expand} expand={expand} className="bg-body-tertiary mb-3 px-6 md:px-10 ">
-          <Container fluid>
-          {/* className="px-6 md:px-10" */}
-            {/* === LOGO === */}
-            <Navbar.Brand>
-              <div className="flex" >
-                <img className="h-8 md:h-9" src="https://i.ibb.co/ChXmbLs/kindpng-2637108.png" alt="" />
-                <h3 className="text-xl md:text-3xl font-bold" >Job<span className="text-cyan-500" >IN</span></h3>
-              </div>
-            </Navbar.Brand>
+   <div className="px-10 shadow-2xl shadow-slate-200">
+    <div className="navbar bg-base-100">
+  <div className="navbar-start">
+    <div className="dropdown">
+      <label tabIndex={0} className="btn btn-ghost lg:hidden">
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
+      </label>
+      <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+       {navLink}
+      </ul>
+    </div>
+     {/* name logo */}
+     <div className="flex" >
+         <img className="h-8 md:h-9" src="https://i.ibb.co/ChXmbLs/kindpng-2637108.png" alt="" />
+         <h3 className="text-xl md:text-3xl font-bold" >Job<span className="text-cyan-500" >IN</span></h3>
+      </div>
+  </div>
+  <div className="navbar-center hidden lg:flex">
+    <ul className="menu menu-horizontal px-1">
+     {navLink}
+    </ul>
+  </div>
 
-          <div className="flex justify-center gap-2 md:gap-8">
+  <div className="navbar-end">
 
-            {/* User Image and name */}
-            <div className="flex justify-center items-center bg-white
-              px-2 rounded-2xl  gap-2">
-                <img className="h-8 w-8 rounded-full" src="https://i.ibb.co/Kxm3pth/dasy-ful.jpg" alt="" />
-                <h5 className="hidden md:inline  justify-center items-center" >Shamima Akter</h5>
-            </div>
-
-            
-            {/* User login SignIn */}
-            <div className="flex justify-center items-center">
-             {
-              user ?
-             <button className="btn btn-sm btn-outline btn-info">Sign Out</button>
-             :
-             <Link to="/login">
-             <button  onClick={handleSignOut}
-             className="btn btn-sm btn-outline btn-info">Log In </button>
-             </Link>
-             } 
-            </div>
+      {/* User Image and name */}
+     {
+      user &&
+      <div className="flex justify-center items-center md:bg-slate-200 py-[3px]
+      px-2 rounded-3xl  gap-2">
+      <img className="h-8 w-8 rounded-full" src={user.photoURL} alt="" />
+      <h5 className="hidden md:inline  justify-center items-center" >{user.displayName}</h5>
+  </div>
+     }
 
 
-            {/* Dark Mode toggler */}
-            <div className="flex justify-center items-center" >
+     {/* Dark Mode toggler */}
+     <div className="flex justify-center items-center mr-3" >
                 <label className="swap swap-rotate ml-2">
                    <input style={{visibility: "hidden"}} 
                       onChange={handleToggle}  type="checkbox" />
@@ -86,59 +92,27 @@ function OffcanvasExample() {
             </div>
 
 
-          <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
-            <Navbar.Offcanvas
-              id={`offcanvasNavbar-expand-${expand}`}
-              aria-labelledby={`offcanvasNavbarLabel-expand-${expand}`}
-              placement="end"
-            >
-              <Offcanvas.Header closeButton>
-                <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
-                <div className="flex" >
-                <img className="h-8" src="https://i.ibb.co/ChXmbLs/kindpng-2637108.png" alt="" />
-                <h3 className="text-2xl font-bold" >Job<span className="text-cyan-500" >IN</span></h3>
-                </div>
-                </Offcanvas.Title>
-              </Offcanvas.Header> 
-              <Offcanvas.Body>
-                <Nav className="justify-content-end text-cyan-500
-                flex-grow-1 pe-3 font-semibold">
-                  <Link to="/" >Home</Link>
-                  <Nav.Link to="/" >Add job</Nav.Link>
-                  <Nav.Link to="/" >My posted jobs</Nav.Link>
-                  <Nav.Link to="/" >My Bids</Nav.Link>
-                  <Nav.Link to="/" >Bid Requests</Nav.Link>
-                  {/* <NavDropdown
-                    title="Dropdown"
-                    id={`offcanvasNavbarDropdown-expand-${expand}`}
-                  >
-                    <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
-                    <NavDropdown.Item href="#action4">
-                      Another action
-                    </NavDropdown.Item>
-                    <NavDropdown.Divider />
-                    <NavDropdown.Item href="#action5">
-                      Something else here
-                    </NavDropdown.Item>
-                  </NavDropdown> */}
-                </Nav>
-                {/* <Form className="d-flex">
-                  <Form.Control
-                    type="search"
-                    placeholder="Search"
-                    className="me-2"
-                    aria-label="Search"
-                  />
-                  <Button variant="outline-success">Search</Button>
-                </Form> */}
-              </Offcanvas.Body>
-           
-            </Navbar.Offcanvas>
-          </div>
-          </Container>
-        </Navbar>
-      ))}
-    </div>
+    {/* User login SignIn */}
+    <div className="flex justify-center items-center">
+            {/* <Link to="/login">
+             <button 
+             className="btn btn-sm btn-outline btn-info">Log In </button>
+             </Link> */}
+             {
+              user ?
+             <button onClick={handleSignOut} 
+             className="btn btn-sm btn-outline btn-info">Log Out</button>
+             :
+             <Link to="/login">
+             <button 
+             className="btn btn-sm btn-outline btn-info">Log In </button>
+             </Link>
+             } 
+            </div>
+
+  </div>
+</div>
+   </div>
   );
 }
 
