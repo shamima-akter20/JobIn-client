@@ -33,8 +33,8 @@ function OffcanvasExample() {
     <div className="flex lg:flex-row flex-col lg:py-0 ">
     <Link to="/" className="lg:py-0 text-center lg:px-3 hover:text-slate-400 rounded-3xl  py-1 font-bold text-cyan-600" >Home</Link>
     <Link to="/addjobs" className="lg:py-0 text-center lg:px-3 hover:text-slate-400 rounded-3xl  py-1 font-bold text-cyan-600" >Add job</Link>
-    <Link to="/" className="lg:py-0 text-center lg:px-3 hover:text-slate-400 rounded-3xl  py-1 font-bold text-cyan-600" >My posted jobs</Link>
-    <Link to="/" className="lg:py-0 text-center lg:px-3 hover:text-slate-400 rounded-3xl  py-1 font-bold text-cyan-600" >My Bids</Link>
+    <Link to="/mypostedjob" className="lg:py-0 text-center lg:px-3 hover:text-slate-400 rounded-3xl  py-1 font-bold text-cyan-600" >My posted jobs</Link>
+    <Link to="/mybid" className="lg:py-0 text-center lg:px-3 hover:text-slate-400 rounded-3xl  py-1 font-bold text-cyan-600" >My Bids</Link>
     <Link to="/" className="lg:py-0 text-center lg:px-3 hover:text-slate-400 rounded-3xl  py-1 font-bold text-cyan-600" >Bid Requests</Link>
     </div>
    </>

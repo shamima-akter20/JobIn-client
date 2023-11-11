@@ -56,3 +56,5 @@ const Footer = () => {
 };
 
 export default Footer;
+{/* <h1 className="text-3xl md:text-4xl font-bold">
+Job Cate<span className="text-cyan-500">gor</span>y</h1> */}
