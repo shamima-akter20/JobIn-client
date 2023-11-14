@@ -6,8 +6,7 @@ import { AuthContext } from "../Authentication/AuthProvider";
 export default function BidRequest() {
     const [bidData, setBidData] = useState([])
     const {user} = useContext(AuthContext)
-    const [isPending, setIspending] = useState(true)
-    // console.log(bidData);
+    console.log(bidData);
 
     useEffect(()=> {
         fetch(` http://localhost:1212/myBid?buyer_email=${user?.email}`)

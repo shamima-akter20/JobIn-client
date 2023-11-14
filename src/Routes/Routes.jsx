@@ -8,6 +8,7 @@ import Category from "../Pages/Home/Category";
 import MyBid from "../Pages/MyBid.jsx/MyBid";
 import BidRequest from "../Pages/bidRequest/BidRequest";
 import LogIn from "./../Pages/Authentication/LogIn";
+import PrivateRoute from "./../Pages/Authentication/PrivateRoute";
 import Register from "./../Pages/Authentication/Register";
 import Error from "./../Pages/Error/Error";
 import Home from "./../Pages/Home/Home";
@@ -32,7 +33,7 @@ const router = createBrowserRouter([
         },
         {
           path:'/addjobs',
-          element:<AddJobs></AddJobs> ,
+          element:<PrivateRoute><AddJobs></AddJobs></PrivateRoute> ,
         },
         {
           path:'/category/:category',
@@ -40,11 +41,13 @@ const router = createBrowserRouter([
         },
         {
           path:'/mybid',
-          element:<MyBid></MyBid> 
+          element:<PrivateRoute></PrivateRoute> 
         },
         {
           path:'/mypostedjob',
-          element:<MyPostedJob></MyPostedJob>,
+          element:<PrivateRoute>
+            <MyPostedJob><MyBid></MyBid></MyPostedJob>
+          </PrivateRoute>,
         },
         {
           path:'/editmodal/:id',
@@ -53,12 +56,12 @@ const router = createBrowserRouter([
         },
         {
           path:"/bidnow/:id",
-          element:<BidNow></BidNow> ,
+          element:<PrivateRoute><BidNow></BidNow></PrivateRoute> ,
           loader:({params})=>fetch(`http://localhost:1212/addjob/${params.id}`),
         },
         {
           path: "/bidRequest",
-          element: <BidRequest/>
+          element: <PrivateRoute><BidRequest/></PrivateRoute>
         }
       ]
     },
