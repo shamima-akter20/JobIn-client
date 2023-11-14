@@ -7,10 +7,10 @@ const Footer = () => {
                 <img className="h-8 md:h-9" src="https://i.ibb.co/ChXmbLs/kindpng-2637108.png" alt="" />
                 <h3 className="text-xl md:text-3xl font-bold" >Job<span className="text-cyan-500" >IN</span></h3>
               </div>
-          <p>
+          <div>
             Providing reliable tech since 1992 <br />
             <p>Copyright © 2023 - All right reserved</p>
-          </p>
+          </div>
         </aside>
         <nav>
           <header className="footer-title">Social</header>

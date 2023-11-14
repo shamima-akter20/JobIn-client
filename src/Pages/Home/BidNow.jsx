@@ -3,6 +3,8 @@ import { useContext } from "react";
 import { useLoaderData, useLocation, useNavigate } from "react-router-dom";
 // import Swal from "sweetalert2";
 import toast from "react-hot-toast";
+import Swal from "sweetalert2";
+import WebTitle from "../../components/WebTitle";
 import { AuthContext } from "./../Authentication/AuthProvider";
 import bid from "./bid.json";
 
@@ -12,44 +14,53 @@ const BidNow = () => {
   const { email, job_title, deadline, max_price, min_price, description } =
     loadDetail;
 
-    const location = useLocation();
-    const navigate = useNavigate();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const handleBid = (e) => {
     e.preventDefault("");
     const form = e.target;
-
-    const userEmail = user?.email;
+    const userEmail = e.target.email.value;
+    const buyer_email = email;
     const myPrice = form.price.value;
-    const bidInfo = { userEmail, email, deadline, job_title, myPrice };
+    const bidInfo = { status: "pending", userEmail, buyer_email, deadline, job_title, myPrice };
     console.log(bidInfo);
+    // hmm ekhane kaj ses. eta korei ba ki hobe?... seta 10 no requirment e kaj korar somoy bujhte parben...ok.. ebar kaj koren ami dekhtesi..ok
+    if (user?.email === buyer_email ) {
+      return Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "You Are buyer You can't bid",
+      });
+    }
 
-    fetch('http://localhost:1212/bidJob', {
-        method: 'POST',
-        headers:{
-           'content-type': 'application/json'
-        },
-        body: JSON.stringify(bidInfo)
-     })
-     .then(res => res.json())
-     .then(data => {
-       console.log(data);
-       if(data.insertedId){
-        console.log("agdum");
-        //  Swal.fire({
-        //    title: "Good job!",
-        //    text: "You Added Successfully!",
-        //    icon: "success"
-        //  });
-        toast.success('Successfully toasted!') 
-        // To("Successfully toasted!")
-         navigate(location?.state ? location.state : '/mybid' );
-       }
-     })
+    fetch("http://localhost:1212/bidJob", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(bidInfo),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.insertedId) {
+          console.log("agdum");
+          //  Swal.fire({
+          //    title: "Good job!",
+          //    text: "You Added Successfully!",
+          //    icon: "success"
+          //  });
+          toast.success("Successfully toasted!");
+          // To("Successfully toasted!")
+          navigate(location?.state ? location.state : "/mybid");
+        }
+      });
   };
 
   return (
     <div className="mb-14">
+      <WebTitle>Job Details</WebTitle>
       <h1 className="text-3xl md:text-4xl text-center my-10 font-bold">
         Job Deta<span className="text-cyan-500">il</span>s
       </h1>
@@ -119,11 +130,9 @@ const BidNow = () => {
                   />
                 </div>
 
-               
                 <button className="w-full mt-3 btn btn-outline btn-info">
                   Bid on the project
                 </button>
-              
               </form>
             </div>
 
@@ -134,7 +143,7 @@ const BidNow = () => {
                 className="lg:pl-16 h-48 mt-10 lg:mt-0 md:h-64 lg:h-96"
               />
             </div>
-          </div> 
+          </div>
         </div>
         <div className="my-6 ml-12 mr-12">
           <h1 className="text-3xl md:text-4xl font-bold ">{job_title}</h1>
@@ -155,7 +164,6 @@ const BidNow = () => {
           </p>
         </div>
       </div>
-      
     </div>
   );
 };

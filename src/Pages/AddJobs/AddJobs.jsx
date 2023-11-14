@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import WebTitle from "../../components/WebTitle";
 import { AuthContext } from "../Authentication/AuthProvider";
 
 
@@ -12,8 +13,9 @@ const AddJobs = () => {
     const handleAddJob = e =>{
       e.preventDefault();
 
+      const userName = user?.displayName;
+      const userImage = user?.photoURL;
       const form = e.target;
-      const name = user?.displayName
       const email = user?.email;
       const job_title = form.job_title.value;
       const deadline = form.deadline.value;
@@ -21,7 +23,8 @@ const AddJobs = () => {
       const max_price = form.max_price.value;
       const min_price = form.min_price.value;
       const description = form.description.value;
-      const formInfo = {name, email, job_title, deadline,Category, max_price, min_price, description } 
+      const formInfo = {userName, userImage,
+      email, job_title, deadline,Category, max_price, min_price, description } 
       console.log(formInfo);
       // console.log(user?.displayName);
     
@@ -49,6 +52,7 @@ const AddJobs = () => {
 
     return (
   <div>
+    <WebTitle>Post Job</WebTitle>
     <h1 className="font-bold text-center py-8 text-3xl md:text-4xl">Add J<span className="text-cyan-500 " >ob</span> </h1>
       <form onSubmit={handleAddJob}
       className="mx-12 md:mx-20 mb-16">

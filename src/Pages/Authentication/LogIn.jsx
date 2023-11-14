@@ -6,6 +6,7 @@ import Login from "./Login.json";
 import { Card, Label, TextInput } from "flowbite-react";
 import { useContext, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import WebTitle from "../../components/WebTitle";
 import { AuthContext } from "./AuthProvider";
 
 const LogIn = () => {
@@ -62,10 +63,12 @@ const LogIn = () => {
       setLoginError(error.message)
     })
   }
+
+  // bujhesen ki korlam ?hmm?pore bujhe nibo..problem nai
     
   return (
     <div>
-
+      <WebTitle>Login</WebTitle>
        <h1 className="my-10 text-3xl md:text-5xl font-bold text-center" >
         Please Log<span className=" text-cyan-500">in</span>
        </h1>
