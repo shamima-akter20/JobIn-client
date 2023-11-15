@@ -63,7 +63,7 @@ const Register = () => {
         });
 
         //navigate after registersd
-        //navigate(location?.state ? location.state : '/' );
+        navigate(location?.state ? location.state : '/' );
       })
       .catch((error) => {
         console.error(error);
