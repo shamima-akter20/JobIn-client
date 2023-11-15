@@ -15,8 +15,7 @@ const MyPostedJob = () => {
   return (
     <div className="">
       <WebTitle>My Posted Job</WebTitle>
-      <div
-        className="hero "
+      <div className="hero "
         style={{
           backgroundImage: "url( https://i.ibb.co/HKqGMrn/jobi-3.webp )",
         }}>
