@@ -65,7 +65,7 @@ export default function BidRequest() {
   return (
     <div className="px-10">
       <WebTitle>Bid Request</WebTitle>
-      <div className="overflow-x-auto">
+    <div className="overflow-x-auto my-14">
   <table className="table">
     {/* head */}
     <thead>

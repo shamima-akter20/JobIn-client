@@ -11,6 +11,7 @@ const MyBid = () => {
         .then(res=> res.json())
         .then(data=> setBidData(data))
     }, [])
+    const {_id,status,userEmail,deadline,job_title,myPrice} = bidData;
 
   return (
     <div>
@@ -30,15 +31,21 @@ const MyBid = () => {
           <tbody>
 
             {/* row 1 */}
-            <tr>
-              <th>mach kata</th>
-              <td>machkata@koshai.com:)</td>
-              <td>kalker agerdin :}</td>
-              <td>dorkar nai</td>
+            {
+              bidData.map(bid =>{
+                const {_id,status,userEmail,deadline,job_title,myPrice} = bid;   
+                
+                <tr key={_id}>
+              <th>{job_title}</th>
+              <td>{userEmail}</td>
+              <td>{deadline}</td>
+              <td>{status}</td>
               <td>
                 <button className="btn btn-outline btn-info btn-sm">cholte thakbe </button>
               </td>
             </tr>
+              })
+            }
            
           </tbody>
         </table>
