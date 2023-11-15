@@ -11,7 +11,7 @@ const Home = () => {
             <WebTitle>Home</WebTitle>
             <Banner></Banner>
             <Category></Category>
-            <Feature></Feature>
+            <Feature className="mx-auto"></Feature>
         </div>
     );
 };
