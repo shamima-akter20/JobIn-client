@@ -27,7 +27,7 @@ const About = () => {
 
             <div className="py-4" >
                 <h1 className="text-2xl font-bold" >What Sets Us Apart</h1>
-                <p>At  <span className="font-bold">Job<span className="text-cyan-500" >IN</span></span> , we stand out through our commitment to user-centric design, innovative features, and a genuine passion for the industries we serve. Our platform goes beyond traditional job listings; it's a dynamic hub that facilitates connections, fosters skill development, and celebrates the successes of our vibrant community.</p>
+                <p>At  <span className="font-bold">Job<span className="text-cyan-500" >IN</span></span> , we stand out through our commitment to user-centric design, innovative features, and a genuine passion for the industries we serve. Our platform goes beyond traditional job listings; it is a dynamic hub that facilitates connections, fosters skill development, and celebrates the successes of our vibrant community.</p>
             </div>
 
             <div className="py-4" >

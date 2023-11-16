@@ -1,15 +1,31 @@
 
 import { Tab, TabPanel, Tabs, TabsBody, TabsHeader } from "@material-tailwind/react";
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
+import MySpinner from "../../components/MySpinner";
 
 const Category = () => {
-    const [loadData, setLoadData] = useState([]);
-    useEffect(() => {
-        fetch("http://localhost:1212/addjob")
-        .then((res) => res.json())
-        .then((data) => setLoadData(data));
-    },[]);
+    // const [loadData, setLoadData] = useState([]);
+    // useEffect(() => {
+    //     fetch("http://localhost:1212/addjob")
+    //     .then((res) => res.json())
+    //     .then((data) => setLoadData(data));
+    // },[]);
+
+    const {data:loadData, isPending, isError, error} = useQuery({
+      queryKey: ["allJob"],
+      queryFn: async ()=>{
+        const res = await fetch("http://localhost:1212/addjob")
+        const data = await res.json()
+        return data;
+      }
+    })
+
+    if(isPending){
+      return <MySpinner/>
+    }
+    
+    console.log(isPending, isError, error);
     
     const data = [
         {

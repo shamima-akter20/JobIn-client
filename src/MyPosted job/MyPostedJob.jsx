@@ -1,17 +1,26 @@
-import { useContext, useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useContext } from "react";
 import { AuthContext } from "../Pages/Authentication/AuthProvider";
+import MySpinner from "../components/MySpinner";
 import WebTitle from "../components/WebTitle";
 import PostedJobCard from "./PostedJobCard";
 
 const MyPostedJob = () => {
   const {user} = useContext(AuthContext)
-  const [jobData, setJobData] = useState([])
+ 
 
-  useEffect(()=>{
-    fetch(`http://localhost:1212/getMyJob/${user?.email}`)
-    .then(res=> res.json())
-    .then(data=> setJobData(data))
-  },[])
+  const {data: jobData, isPending } = useQuery({
+    queryKey: ["postedJob"],
+    queryFn: async ()=>{
+      const response = await fetch(`http://localhost:1212/getMyJob/${user?.email}`, {
+        credentials: 'include'
+      })
+      const data = response.json()
+      return data;
+    }
+  })
+
+  if(isPending) return <MySpinner/>
   return (
     <div className="">
       <WebTitle>My Posted Job</WebTitle>

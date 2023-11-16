@@ -1,3 +1,4 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import EditModal from "./EditModal";
 
@@ -13,6 +14,24 @@ export default function PostedJobCard({ data }) {
     description,
   } = data;
 
+  const queryClient = useQueryClient()
+
+  const {mutate, data:deletedData} = useMutation({
+    mutationKey: ["deleteJob"],
+    mutationFn: async (_id)=>{
+      const res = await fetch(`http://localhost:1212/addjob/${_id}`,{
+        method: 'DELETE'
+
+      })
+      const data = res.json()
+      return data;
+    },
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: ['postedJob'] })
+    },
+  })
+
   const handleDelete = _id =>{
     Swal.fire({
       title: "Are you sure?",
@@ -24,22 +43,17 @@ export default function PostedJobCard({ data }) {
       confirmButtonText: "Yes, delete it!"
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:1212/addjob/${_id}`,{
-          method: 'DELETE'
-
-        })
-        .then(res => res.json())
-        .then(data => {
-           console.log(data);
-           if(data.deletedCount > 0){
+        mutate(_id)
+       
+           if(deletedData.deletedCount > 0){
                 Swal.fire({
                 title: "Deleted!",
                 text: "Your job has been deleted.",
                 icon: "success" });
          
            }
-        })
-      }
+        }
+      
     });
   }
 

@@ -1,3 +1,4 @@
+import { useMutation } from "@tanstack/react-query";
 import { useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -9,6 +10,21 @@ const AddJobs = () => {
     const { user } = useContext(AuthContext);
     const location = useLocation();
     const navigate = useNavigate();
+
+    const {mutate, data} = useMutation({
+      mutationKey: ["addJob"],
+      mutationFn: async(formInfo)=>{
+        const res =  await fetch('http://localhost:1212/addJob', {
+          method: 'POST',
+          headers:{
+             'content-type': 'application/json'
+          },
+          body: JSON.stringify(formInfo)
+       })
+       const data = res.json()
+       return data;
+      }
+    })
 
     const handleAddJob = e =>{
       e.preventDefault();
@@ -26,29 +42,18 @@ const AddJobs = () => {
       const formInfo = {userName, userImage,
       email, job_title, deadline,Category, max_price, min_price, description } 
       console.log(formInfo);
-      // console.log(user?.displayName);
     
-      fetch('http://localhost:1212/addJob', {
-         method: 'POST',
-         headers:{
-            'content-type': 'application/json'
-         },
-         body: JSON.stringify(formInfo)
-      })
-      .then(res => res.json())
-      .then(data => {
-        console.log(data);
-        if(data.insertedId){
-          Swal.fire({
-            title: "Good job!",
-            text: "You Added Successfully!",
-            icon: "success"
-          });
-          navigate(location?.state ? location.state : '/mypostedjob' );
-        }
-      })
-    
+      mutate(formInfo)
+     if(data.insertedId){
+      Swal.fire({
+        title: "Good job!",
+        text: "You Added Successfully!",
+        icon: "success"
+      });
+      navigate(location?.state ? location.state : '/mypostedjob' );
+    }
      }
+
 
     return (
   <div>

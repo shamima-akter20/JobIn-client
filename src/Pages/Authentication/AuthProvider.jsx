@@ -31,7 +31,21 @@ const AuthProvider = ({children}) => {
 
     useEffect(() =>{
       const unSubscribe = onAuthStateChanged(auth, currentUser =>{
-            console.log('user in state change', currentUser);
+        if(currentUser){
+            fetch(`http://localhost:1212/createToken`, {
+                method: "post",
+                credentials: 'include',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify({email: currentUser?.email})
+            })
+            .then(res=> res.json())
+            .then(data=> console.log(data))
+        }else{
+            console.log("user no t logged in");
+            fetch(`http://localhost:1212/clearToken`)
+        }
             setUser(currentUser);
             setLoading(false);
         });

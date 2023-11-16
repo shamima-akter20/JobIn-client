@@ -1,63 +1,57 @@
-import { useContext, useEffect, useState } from "react";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useContext } from "react";
+import MySpinner from "../../components/MySpinner";
 import WebTitle from "../../components/WebTitle";
 import { AuthContext } from "../Authentication/AuthProvider";
 
 
 export default function BidRequest() {
-    const [bidData, setBidData] = useState([])
     const {user} = useContext(AuthContext)
-    console.log(bidData);
+  
 
-    useEffect(()=> {
-        fetch(` http://localhost:1212/myBid?buyer_email=${user?.email}`)
-        .then(res=> res.json())
-        .then(data=> setBidData(data))
-    }, [])
+    const {data : bidData , isPending, refetch} = useQuery({
+      queryKey:["bidrequest"],
+      queryFn: async()=>{
+        const response =  await fetch(` http://localhost:1212/myBid?buyer_email=${user?.email}`)
+        const data = response.json()
+        return data ;
+      }
+    })
+
+    const {mutate} = useMutation({
+      mutationKey: ["handleAccept"],
+      mutationFn: async (id)=>{
+        const res = await fetch(`http://localhost:1212/acceptedBid/${id}`, {
+          method: "put"
+        })
+        const data = await res.json()
+        return data;
+      }
+    })
+
+    const {mutate:deleteMutate} = useMutation({
+      mutationKey: ['handleDelete'],
+      mutationFn: async (id)=>{
+        const res = await  fetch(`http://localhost:1212/rejectedBid/${id}`, {
+          method: "put"
+        })
+        const data = res.json()
+        return data;
+      }
+    })
+
+
+  if(isPending) return <MySpinner/>
+
 
     const handleAccept = (id)=>{
-      console.log(id);
-      // databaser moddhe pending status ta change kore felte hobe
-      fetch(`http://localhost:1212/acceptedBid/${id}`, {
-        method: "put"
-      })
-      .then(res=> res.json())
-      .then(data=> {
-        // console.log(data)
-        if(data.modifiedCount){
-        const newData =  bidData.map(bidD=> {
-          if(bidD._id === id){
-            bidD.status = 'In Progress'
-            return bidD
-          }else{
-            return bidD
-          }
-         })
-         setBidData(newData)
-        }
-      })
+      mutate(id)
+      refetch()
     }
 
     const handleDelete = (id)=>{
-      console.log(id);
-      // databaser moddhe pending status ta change kore felte hobe
-      fetch(`http://localhost:1212/rejectedBid/${id}`, {
-        method: "put"
-      })
-      .then(res=> res.json())
-      .then(data=> {
-        // console.log(data);
-        if(data.modifiedCount){
-          const newData =  bidData.map(bidD=> {
-            if(bidD._id === id){
-              bidD.status = 'Canceled'
-              return bidD
-            }else{
-              return bidD
-            }
-           })
-           setBidData(newData)
-          }
-      })
+      deleteMutate(id)
+      refetch()
     }
 
 
@@ -81,7 +75,7 @@ export default function BidRequest() {
     <tbody>
       {/* row 1 */}
      {bidData.map(bid=> {
-      // console.log(Object.keys(bid).join(','));
+     
       const {_id,status,userEmail,deadline,job_title,myPrice} = bid;
       return  <tr key={_id}>
       
