@@ -11,7 +11,7 @@ const AddJobs = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const {mutate, data} = useMutation({
+    const {mutate, data, status} = useMutation({
       mutationKey: ["addJob"],
       mutationFn: async(formInfo)=>{
         const res =  await fetch('https://b8-assignment-11-server.vercel.app/addJob', {
@@ -44,15 +44,18 @@ const AddJobs = () => {
       console.log(formInfo);
     
       mutate(formInfo)
-     if(data.insertedId){
-      Swal.fire({
-        title: "Good job!",
-        text: "You Added Successfully!",
-        icon: "success"
-      });
-      navigate(location?.state ? location.state : '/mypostedjob' );
     }
+
+    if(status === 'success'){
+      if(data.insertedId){
+       Swal.fire({
+         title: "Good job!",
+         text: "You Added Successfully!",
+         icon: "success"
+       });
+       navigate(location?.state ? location.state : '/mypostedjob' );
      }
+    }
 
 
     return (

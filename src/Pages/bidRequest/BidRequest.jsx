@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useContext } from "react";
 import MySpinner from "../../components/MySpinner";
 import WebTitle from "../../components/WebTitle";
@@ -8,11 +8,11 @@ import { AuthContext } from "../Authentication/AuthProvider";
 export default function BidRequest() {
     const {user} = useContext(AuthContext)
   
-
-    const {data : bidData , isPending, refetch} = useQuery({
+  const queryClient = useQueryClient()
+    const {data : bidData , isPending} = useQuery({
       queryKey:["bidrequest"],
       queryFn: async()=>{
-        const response =  await fetch(` https://b8-assignment-11-server.vercel.app/myBid?buyer_email=${user?.email}`)
+        const response =  await fetch(`https://b8-assignment-11-server.vercel.app/myBid?buyer_email=${user?.email}`)
         const data = response.json()
         return data ;
       }
@@ -26,6 +26,9 @@ export default function BidRequest() {
         })
         const data = await res.json()
         return data;
+      },
+      onSuccess: ()=>{
+        queryClient.invalidateQueries(["bidrequest"])
       }
     })
 
@@ -37,6 +40,9 @@ export default function BidRequest() {
         })
         const data = res.json()
         return data;
+      },
+      onSuccess: ()=>{
+        queryClient.invalidateQueries(["bidrequest"])
       }
     })
 
@@ -46,12 +52,12 @@ export default function BidRequest() {
 
     const handleAccept = (id)=>{
       mutate(id)
-      refetch()
+      // refetch()
     }
 
     const handleDelete = (id)=>{
       deleteMutate(id)
-      refetch()
+      // refetch()
     }
 
 
@@ -59,7 +65,9 @@ export default function BidRequest() {
   return (
     <div className="px-10">
       <WebTitle>Bid Request</WebTitle>
-    <div className="overflow-x-auto my-14">
+      <h1 className="font-bold text-center py-8 text-3xl md:text-4xl">
+        Bid Reque<span className="text-cyan-500 " >sts</span> </h1>
+    <div className="overflow-x-auto my-10">
   <table className="table">
     {/* head */}
     <thead>

@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useContext, useEffect, useState } from "react";
 import MySpinner from "../../components/MySpinner";
 import WebTitle from "../../components/WebTitle";
@@ -9,7 +9,10 @@ const MyBid = () => {
 
   const [sort, setSort] = useState(true);
 
+  const queryClient = useQueryClient()
+
   const [bidData, setBidData] = useState([]);
+
   const { data, status, isPending, refetch } = useQuery({
     queryKey: ["bidJob"],
     queryFn: async () => {
@@ -27,22 +30,25 @@ const MyBid = () => {
       const res = await fetch(`https://b8-assignment-11-server.vercel.app/completeBid/${id}`, {
         method: "put",
       });
-      const data = res.json();
+      const data = await res.json();
       return data;
     },
+    onSuccess: queryClient.invalidateQueries(["bidJob"])
   });
 
   useEffect(()=>{
       if (status === "success") {
         setBidData(data);
       }
-    }, [status])
+    }, [status, data])
 
   if (isPending) return <MySpinner />;
 
-  const handleComplete = (id) => {
+  const handleComplete = async (id) => {
     mutate(id);
-    refetch();
+   const da =  await refetch();
+   console.log(da.data);
+    setBidData(da.data)
   };
   // console.log(bidData);
 
@@ -59,7 +65,10 @@ const MyBid = () => {
   return (
     <div>
       <WebTitle>My Bid</WebTitle>
-      <div className="overflow-x-auto px-14 py-10">
+      <h1 className="font-bold text-center py-8 text-3xl md:text-4xl">
+        My B<span className="text-cyan-500 " >ids</span> </h1>
+
+      <div className="overflow-x-auto px-14 py-6">
         <button className="btn btn-info btn-outline" onClick={handleSort}>
           Sort By {!sort ? "Ascending" : "Descending"} Status
         </button>
@@ -77,13 +86,13 @@ const MyBid = () => {
           <tbody>
             {/* row 1 */}
             {bidData?.map((bid) => {
-              const { _id, status, userEmail, deadline, job_title } = bid;
+              const { _id, status, buyer_email, deadline, job_title } = bid;
               // console.log(bid);
 
               return (
                 <tr key={_id}>
                   <th>{job_title}</th>
-                  <td>{userEmail}</td>
+                  <td>{buyer_email}</td>
                   <td>{deadline}</td>
                   <td>{status}</td>
                   <td>
