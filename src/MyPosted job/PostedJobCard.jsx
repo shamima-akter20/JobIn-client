@@ -19,7 +19,7 @@ export default function PostedJobCard({ data }) {
   const {mutate, data:deletedData} = useMutation({
     mutationKey: ["deleteJob"],
     mutationFn: async (_id)=>{
-      const res = await fetch(`http://localhost:1212/addjob/${_id}`,{
+      const res = await fetch(`https://b8-assignment-11-server.vercel.app/addjob/${_id}`,{
         method: 'DELETE'
 
       })

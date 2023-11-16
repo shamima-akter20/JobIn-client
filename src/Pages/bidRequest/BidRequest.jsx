@@ -12,7 +12,7 @@ export default function BidRequest() {
     const {data : bidData , isPending, refetch} = useQuery({
       queryKey:["bidrequest"],
       queryFn: async()=>{
-        const response =  await fetch(` http://localhost:1212/myBid?buyer_email=${user?.email}`)
+        const response =  await fetch(` https://b8-assignment-11-server.vercel.app/myBid?buyer_email=${user?.email}`)
         const data = response.json()
         return data ;
       }
@@ -21,7 +21,7 @@ export default function BidRequest() {
     const {mutate} = useMutation({
       mutationKey: ["handleAccept"],
       mutationFn: async (id)=>{
-        const res = await fetch(`http://localhost:1212/acceptedBid/${id}`, {
+        const res = await fetch(`https://b8-assignment-11-server.vercel.app/acceptedBid/${id}`, {
           method: "put"
         })
         const data = await res.json()
@@ -32,7 +32,7 @@ export default function BidRequest() {
     const {mutate:deleteMutate} = useMutation({
       mutationKey: ['handleDelete'],
       mutationFn: async (id)=>{
-        const res = await  fetch(`http://localhost:1212/rejectedBid/${id}`, {
+        const res = await  fetch(`https://b8-assignment-11-server.vercel.app/rejectedBid/${id}`, {
           method: "put"
         })
         const data = res.json()

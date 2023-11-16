@@ -10,11 +10,11 @@ const MyBid = () => {
   const [sort, setSort] = useState(true);
 
   const [bidData, setBidData] = useState([]);
-  const { data, status, isPending, refetch, isFetched } = useQuery({
+  const { data, status, isPending, refetch } = useQuery({
     queryKey: ["bidJob"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:1212/bidJobQuery?userEmail=${user?.email}`
+        `https://b8-assignment-11-server.vercel.app/bidJobQuery?userEmail=${user?.email}`
       );
       const data = await res.json();
       return data;
@@ -24,7 +24,7 @@ const MyBid = () => {
   const { mutate } = useMutation({
     mutationKey: ["complete"],
     mutationFn: async (id) => {
-      const res = await fetch(`http://localhost:1212/completeBid/${id}`, {
+      const res = await fetch(`https://b8-assignment-11-server.vercel.app/completeBid/${id}`, {
         method: "put",
       });
       const data = res.json();
@@ -48,7 +48,7 @@ const MyBid = () => {
 
   const handleSort = () => {
     console.log(sort);
-    fetch(`http://localhost:1212/sortMyBidData/${user?.email}?sort=${sort}`)
+    fetch(`https://b8-assignment-11-server.vercel.app/sortMyBidData/${user?.email}?sort=${sort}`)
       .then((res) => res.json())
       .then((da) => {
         setBidData(da);

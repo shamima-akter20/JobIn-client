@@ -7,7 +7,7 @@ import MySpinner from "../../components/MySpinner";
 const Category = () => {
     // const [loadData, setLoadData] = useState([]);
     // useEffect(() => {
-    //     fetch("http://localhost:1212/addjob")
+    //     fetch("https://b8-assignment-11-server.vercel.app/addjob")
     //     .then((res) => res.json())
     //     .then((data) => setLoadData(data));
     // },[]);
@@ -15,7 +15,7 @@ const Category = () => {
     const {data:loadData, isPending, isError, error} = useQuery({
       queryKey: ["allJob"],
       queryFn: async ()=>{
-        const res = await fetch("http://localhost:1212/addjob")
+        const res = await fetch("https://b8-assignment-11-server.vercel.app/addjob")
         const data = await res.json()
         return data;
       }

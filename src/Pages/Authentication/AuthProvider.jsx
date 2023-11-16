@@ -10,7 +10,7 @@ const AuthProvider = ({children}) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    const googleSignIn = (value) => {
+    const googleSignIn = () => {
         return signInWithPopup(auth, googleProvider);     
     }
 
@@ -32,7 +32,7 @@ const AuthProvider = ({children}) => {
     useEffect(() =>{
       const unSubscribe = onAuthStateChanged(auth, currentUser =>{
         if(currentUser){
-            fetch(`http://localhost:1212/createToken`, {
+            fetch(`https://b8-assignment-11-server.vercel.app/createToken`, {
                 method: "post",
                 credentials: 'include',
                 headers: {
@@ -44,7 +44,7 @@ const AuthProvider = ({children}) => {
             .then(data=> console.log(data))
         }else{
             console.log("user no t logged in");
-            fetch(`http://localhost:1212/clearToken`)
+            fetch(`https://b8-assignment-11-server.vercel.app/clearToken`)
         }
             setUser(currentUser);
             setLoading(false);

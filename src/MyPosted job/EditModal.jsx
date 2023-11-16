@@ -18,7 +18,7 @@ export default function EditModal({ data }) {
   const { data: editedData, mutate } = useMutation({
     mutationKey: ["editJob"],
     mutationFn: async (updateInfo) => {
-      const res = await fetch(`http://localhost:1212/addjob/${_id}`, {
+      const res = await fetch(`https://b8-assignment-11-server.vercel.app/addjob/${_id}`, {
         method: "PUT",
         headers: {
           "content-type": "application/json",

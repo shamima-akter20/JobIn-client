@@ -12,7 +12,7 @@ const MyPostedJob = () => {
   const {data: jobData, isPending } = useQuery({
     queryKey: ["postedJob"],
     queryFn: async ()=>{
-      const response = await fetch(`http://localhost:1212/getMyJob/${user?.email}`, {
+      const response = await fetch(`https://b8-assignment-11-server.vercel.app/getMyJob/${user?.email}`, {
         credentials: 'include'
       })
       const data = response.json()
@@ -26,7 +26,7 @@ const MyPostedJob = () => {
       <WebTitle>My Posted Job</WebTitle>
       <div className="hero "
         style={{
-          backgroundImage: "url( https://i.ibb.co/HKqGMrn/jobi-3.webp )",
+          backgroundImage: "url(https://i.ibb.co/HKqGMrn/jobi-3.webp )",
         }}>
         <div className="hero-overlay bg-opacity-80"  ></div>
           

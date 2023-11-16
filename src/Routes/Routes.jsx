@@ -52,12 +52,12 @@ const router = createBrowserRouter([
         {
           path:'/editmodal/:id',
           element:<EditModal></EditModal> ,
-          loader: ({params}) => fetch(`http://localhost:1212/addjob/${params.id}`),
+          loader: ({params}) => fetch(`https://b8-assignment-11-server.vercel.app/addjob/${params.id}`),
         },
         {
           path:"/bidnow/:id",
           element:<PrivateRoute><BidNow></BidNow></PrivateRoute> ,
-          loader:({params})=>fetch(`http://localhost:1212/addjob/${params.id}`),
+          loader:({params})=>fetch(`https://b8-assignment-11-server.vercel.app/addjob/${params.id}`),
         },
         {
           path: "/bidRequest",

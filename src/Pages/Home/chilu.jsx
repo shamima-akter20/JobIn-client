@@ -12,7 +12,7 @@ const Category = () => {
     const params = useParams();
 
     useEffect(() => {
-        fetch("http://localhost:1212/addjob")
+        fetch("https://b8-assignment-11-server.vercel.app/addjob")
         .then((res) => res.json())
         .then((data) => setLoadData(data));
     },[]);

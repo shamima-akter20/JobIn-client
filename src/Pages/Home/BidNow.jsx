@@ -34,7 +34,7 @@ const BidNow = () => {
       });
     }
 
-    fetch("http://localhost:1212/bidJob", {
+    fetch("https://b8-assignment-11-server.vercel.app/bidJob", {
       method: "POST",
       headers: {
         "content-type": "application/json",

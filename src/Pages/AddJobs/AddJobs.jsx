@@ -14,7 +14,7 @@ const AddJobs = () => {
     const {mutate, data} = useMutation({
       mutationKey: ["addJob"],
       mutationFn: async(formInfo)=>{
-        const res =  await fetch('http://localhost:1212/addJob', {
+        const res =  await fetch('https://b8-assignment-11-server.vercel.app/addJob', {
           method: 'POST',
           headers:{
              'content-type': 'application/json'
