@@ -1,3 +1,5 @@
+
+
 const About = () => {
   return (
     <div className="my-10 pb-10 bg-slate-200">
@@ -54,11 +56,7 @@ const About = () => {
                 </h1>
             </div>
             
-       </div>
-
-        
-       
-          
+       </div>   
     </div>
     
   );
